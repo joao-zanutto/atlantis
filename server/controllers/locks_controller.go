@@ -68,6 +68,7 @@ func (l *LocksController) GetLock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	lock, err := l.Locker.GetLock(idUnencoded)
+	jobs, err := // TODO
 	if err != nil {
 		l.respond(w, logging.Error, http.StatusInternalServerError, "Failed getting lock: %s", err)
 		return
@@ -88,6 +89,7 @@ func (l *LocksController) GetLock(w http.ResponseWriter, r *http.Request) {
 		CleanedBasePath: l.AtlantisURL.Path,
 		RepoOwner:       owner,
 		RepoName:        repo,
+		Jobs:			 jobs,
 	}
 
 	err = l.LockDetailTemplate.Execute(w, viewData)
