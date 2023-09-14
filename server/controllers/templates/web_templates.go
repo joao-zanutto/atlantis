@@ -314,6 +314,47 @@ var LockTemplate = template.Must(template.New("lock.html.tmpl").Parse(`
         <div><strong>Locked By:</strong></div><div>{{.LockedBy}}</div>
         <div><strong>Workspace:</strong></div><div>{{.Workspace}}</div>
       </div>
+      <section>
+        <p class="title-heading small"><strong>Jobs</strong></p>
+        {{ if .Jobs }}
+        {{ $basePath := .CleanedBasePath }}
+        <div class="lock-grid">
+        <div class="lock-header">
+          <span>Repository</span>
+          <span>Project</span>
+          <span>Workspace</span>
+          <span>Locked By</span>
+          <span>Date/Time</span>
+          <span>Status</span>
+        </div>
+        {{ range .Jobs }}
+            <div class="lock-row">
+            <a class="lock-link" href="{{ $basePath }}{{.LockPath}}">
+              <span class="lock-reponame">{{.RepoFullName}} #{{.PullNum}}</span>
+            </a>
+            <a class="lock-link" tabindex="-1" href="{{ $basePath }}{{.LockPath}}">
+              <span class="lock-path">{{.Path}}</span>
+            </a>
+            <a class="lock-link" tabindex="-1" href="{{ $basePath }}{{.LockPath}}">
+              <span><code>{{.Workspace}}</code></span>
+            </a>
+            <a class="lock-link" tabindex="-1" href="{{ $basePath }}{{.LockPath}}">
+              <span class="lock-username">{{.LockedBy}}</span>
+            </a>
+            <a class="lock-link" tabindex="-1" href="{{ $basePath }}{{.LockPath}}">
+              <span class="lock-datetime">{{.TimeFormatted}}</span>
+            </a>
+            <a class="lock-link" tabindex="-1" href="{{ $basePath }}{{.LockPath}}">
+              <span><code>Locked</code></span>
+            </a>
+            </div>
+        {{ end }}
+        </div>
+        {{ else }}
+        <p class="placeholder">No locks found.</p>
+        {{ end }}
+      </section>
+
       <br>
         <a class="button button-primary" id="discardPlanUnlock">Discard Plan & Unlock</a>
     </section>
