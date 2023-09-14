@@ -261,6 +261,10 @@ var IndexTemplate = template.Must(template.New("index.html.tmpl").Parse(`
 </html>
 `))
 
+type JobLockDetailData struct {
+  // TODO
+}
+
 // LockDetailData holds the fields needed to display the lock detail view.
 type LockDetailData struct {
 	LockKeyEncoded  string
@@ -275,6 +279,7 @@ type LockDetailData struct {
 	// not using a path-based proxy, this will be an empty string. Never ends
 	// in a '/' (hence "cleaned").
 	CleanedBasePath string
+  Jobs            []JobLockDetailData
 }
 
 var LockTemplate = template.Must(template.New("lock.html.tmpl").Parse(`
